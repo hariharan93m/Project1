@@ -11,8 +11,8 @@ var ps=new mongoose.Schema({
 });
 var cols = mongoose.model('unametable', ps);
 exports.getJson=function(req,res) {
-	var name=req.query['username'];
-	console.log(name);
+	name=req.query['username'];
+	//console.log(name);
 	
 
 	Abc(function (err,resultdata) {
@@ -32,5 +32,28 @@ exports.getJson=function(req,res) {
 		});
 		
 	}
+};
+
+exports.formsubmit=function(req,res) {
+	//console.log("this is "+name);
 	
+	inserting(function (err) {
+		
+		if(err) {
+		res.jsonp("error");
+		} else {
+			res.end("true")
+		}
+	});
+	function inserting(mycallback) {
+		var insert=new cols;
+		insert.username=name;
+		insert.save(function(err) {
+			mycallback(err);
+			//console.log("This"+col);
+		
+		});
+		
+	
+	}
 };

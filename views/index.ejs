@@ -6,8 +6,11 @@ $(document).ready(function() {
 	var min_numbercharacters = 3;
 	var characters_error='Minimum number of character is 3';
 	//var uname=$('#txtid').val();
+	//$('input[type="submit"]').attr('disabled','disabled');
+	$('#txtid').css("outline","0");
 	$('#txtid').blur(function() {
-		$('#txtid').css("outline","0");
+		
+		
 		if($('#txtid').val().length < min_numbercharacters) {
 		   $('#txtid').focus();
 		   $('#div_id1').html(characters_error);
@@ -21,32 +24,49 @@ $(document).ready(function() {
 		});
 	
 	    function check_html() {
-		var uname = $('#txtid').val();
+		uname = $('#txtid').val();
 		$.ajax({url:"/getJson?username="+uname,
 				method:"GET",
 				datatype:"json",
 				success: function(result) {
 					//console.log(result.username);
-					if(result == null)
-						{
-						$('#div_id1').html(uname + ' is Available');
-						$('#txtid').css("border","green solid 1px");
-						} else {  
-	                    //show that the username is NOT available
-						$('#txtid').css("border","red solid 1px");
-						$('#txtid').focus();
-	                    $('#div_id1').html(uname + ' is notAvailable');  
-	                
-		        
-						}
-				}
+							if(result == null) {
+								$('#div_id1').html(uname + ' is Available');
+								$('#txtid').css("border","green solid 1px");
+								$('input[type="submit"]').removeAttr('disabled');
+							} else {  
+								//show that the username is NOT available
+								$('#txtid').css("border","red solid 1px");
+								$('#txtid').focus();
+								$('#div_id1').html(uname + ' is notAvailable');  
+								$('input[type="submit"]').attr('disabled','disabled');
+							}
+						 }
 		});
+	    }
+	    
+$('#smt').click(function() {
+	if($('#txtid').val().length < min_numbercharacters) {
+		   $('#txtid').focus();
+		   $('#div_id1').html(characters_error);
+		   $('#txtid').css("border","red solid 1px");
+	} else{
+		$.ajax({url:"/formsubmit",
+	    method:"GET",
+	    datatype:"json",
+	    success: function(result) {
+	    	$('#div_id1').html(uname + ' is Inserted Successfully');
+	    		  }
+	    	
+});
 	}
+});
+	    
 });
 </script>
 </head>
 <body>
 Username:<input type='text' id='txtid'name="uname"><div id='div_id1'> </div>
-<input type ="submit" value="submit">
+<input type ="submit" value="submit" id="smt">
 </body>
 </html>
