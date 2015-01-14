@@ -7,6 +7,21 @@ $(document).ready(function() {
 	var characters_error='Minimum number of character is 3';
 	//var uname=$('#txtid').val();
 	//$('input[type="submit"]').attr('disabled','disabled');
+	drop();
+	function drop() {
+					$.ajax({url:"/dropdown",
+							method:"GET",
+							datatype:"json",
+							success: function(data) {
+	/*console.log(JSON.stringify(data[0].username));*/
+								for(var i = 0; i < data.length; i++) {
+									dt=data[i].username;
+	/*$('<option>').val(data[i].username).appendTo('#dropdown');*/
+									$('#dropdown').append(new Option(data[i].username, data[i].username));
+								}
+							}
+					});
+	}
 	$('#txtid').css("outline","0");
 	$('#txtid').blur(function() {
 		
@@ -55,18 +70,24 @@ $('#smt').click(function() {
 	    method:"GET",
 	    datatype:"json",
 	    success: function(result) {
-	    	$('#div_id1').html(uname + ' is Inserted Successfully');
-	    		  }
-	    	
-});
-	}
-});
+	    			$('#div_id1').html(uname + ' is Inserted Successfully');
+	    drop();		  
+	    }
 	    
+		});
+	}
+	
+	
+});
 });
 </script>
 </head>
 <body>
-Username:<input type='text' id='txtid'name="uname"><div id='div_id1'> </div>
+Username:<input type='text' id='txtid'name="uname"><div id='div_id1'> </div><br>
+Registered usernames:
+	<select id="dropdown">
+ 	<option>See here</option>
+ 	</select><br>
 <input type ="submit" value="submit" id="smt">
 </body>
 </html>

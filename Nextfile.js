@@ -57,3 +57,25 @@ exports.formsubmit=function(req,res) {
 	
 	}
 };
+
+
+exports.dropdown=function(req,res) {
+	Abc(function (err,resultdata) {
+		
+		if(err) {
+		res.jsonp("error");
+		} else {
+			res.jsonp(resultdata)
+		//console.log(resultdata);
+		}
+	});
+	function Abc(mycallback) {
+		
+		cols.find({},function(err,col) {
+			mycallback(err,col);
+			//console.log("This"+col);
+		
+		});
+		
+	}
+}
