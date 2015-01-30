@@ -5,52 +5,42 @@
 $(document).ready(function() {
 	var min_numbercharacters = 3;
 	var characters_error='Minimum number of character is 3';
-	//var uname=$('#txtid').val();
-	//$('input[type="submit"]').attr('disabled','disabled');
+	//drop() function is used here for displaying the list of values from mongodb to drop downlist box
 	drop();
-	function drop() {
-					$.ajax({url:"/dropdown",
+	function drop() {$.ajax({url:"/dropdown",
 							method:"GET",
 							datatype:"json",
-							success: function(data) {
-	/*console.log(JSON.stringify(data[0].username));*/
-								for(var i = 0; i < data.length; i++) {
-									dt=data[i].username;
-	/*$('<option>').val(data[i].username).appendTo('#dropdown');*/
-									$('#dropdown').append(new Option(data[i].username, data[i].username));
-								}
-							}
+							success:function(data) {
+										for(var i = 0; i < data.length; i++) {
+											dt=data[i].username;
+											$('#dropdown').append(new Option(data[i].username, data[i].username));
+										}
+									}
 					});
 	}
 	$('#txtid').css("outline","0");
+	
 	$('#txtid').blur(function() {
-		
-		
 		if($('#txtid').val().length < min_numbercharacters) {
 		   $('#txtid').focus();
 		   $('#div_id1').html(characters_error);
 		   $('#txtid').css("border","red solid 1px");
-			
 		} else {
-			//$('#txtid').css("border","green solid 1px");
-			
 			check_html();
 		}
 		});
 	
 	    function check_html() {
 		uname = $('#txtid').val();
-		$.ajax({url:"/getJson?username="+uname,
+		$.ajax({url:"/getJson?username="+uname,//passing query param
 				method:"GET",
 				datatype:"json",
 				success: function(result) {
-					//console.log(result.username);
 							if(result == null) {
 								$('#div_id1').html(uname + ' is Available');
 								$('#txtid').css("border","green solid 1px");
 								$('input[type="submit"]').removeAttr('disabled');
 							} else {  
-								//show that the username is NOT available
 								$('#txtid').css("border","red solid 1px");
 								$('#txtid').focus();
 								$('#div_id1').html(uname + ' is notAvailable');  
@@ -67,17 +57,14 @@ $('#smt').click(function() {
 		   $('#txtid').css("border","red solid 1px");
 	} else{
 		$.ajax({url:"/formsubmit",
-	    method:"GET",
-	    datatype:"json",
-	    success: function(result) {
-	    			$('#div_id1').html(uname + ' is Inserted Successfully');
-	    drop();		  
-	    }
-	    
-		});
+				method:"GET",
+				datatype:"json",
+				success:function(result) {
+	    					$('#div_id1').html(uname + ' is Inserted Successfully');
+	    					drop();		  
+	    				}
+	    		  });
 	}
-	
-	
 });
 });
 </script>
