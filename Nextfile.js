@@ -6,7 +6,7 @@ exports.getHtml=function(req,res) {
 };
 var ps=new mongoose.Schema({
 	username:"string",
-	 resetPasswordToken: "string",
+	 //resetPasswordToken: "string",
 	  resetPasswordExpires: "Date"
 },{ 
 	collection : 'unametable'

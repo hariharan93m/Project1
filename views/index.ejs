@@ -61,11 +61,16 @@ $('#smt').click(function() {
 				datatype:"json",
 				success:function(result) {
 	    					$('#div_id1').html(uname + ' is Inserted Successfully');
+	    					$('input[type="submit"]').attr('disabled','disabled');
 	    					drop();		  
 	    				}
 	    		  });
 	}
 });
+$('#smt').mouseover(function() {
+	 $('#smt').css("cursor","pointer");
+});
+
 });
 </script>
 </head>
